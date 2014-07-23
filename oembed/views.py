@@ -1,10 +1,10 @@
+import json
 import re
 
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse, get_resolver
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.template import defaultfilters, RequestContext
-from django.utils import simplejson
 from django.utils.encoding import smart_str
 
 import oembed
@@ -96,7 +96,7 @@ def consume_json(request):
             'rendered': rendered,
         }
 
-    return HttpResponse(simplejson.dumps(output), mimetype='application/json')
+    return HttpResponse(json.dumps(output), mimetype='application/json')
 
 def oembed_schema(request):
     """
@@ -140,5 +140,5 @@ def oembed_schema(request):
     url_schemes.sort(key=lambda item: item['matches'])
     
     response = HttpResponse(mimetype='application/json')
-    response.write(simplejson.dumps(url_schemes))
+    response.write(json.dumps(url_schemes))
     return response
